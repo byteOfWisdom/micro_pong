@@ -2,8 +2,8 @@ import socket
 import select
 import time
 
-p1_pos = 0
-p2_pos = 0
+p1_pos = 7
+p2_pos = 7
 
 p1_conn = False
 p2_conn = False
