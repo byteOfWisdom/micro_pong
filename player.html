@@ -9,22 +9,6 @@
 
 	var ip = "SERVER_IP";
 
-	function send_data() {
-		let slider = document.getElementById("slider");
-		const data = { position: slider.value};
-
-		fetch(ip, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-	}
-
 	function plus_one() {
 		fetch(ip + "_plus_one", {
 			method: "PUT",
@@ -54,7 +38,7 @@
 	<head> <title>Pico W</title> </head>
 
 	<body>
-		<button style="height:400px;width:400px" id="plus_one" onclick="plus_one()"> + </button> </br>
-		<button style="height:400px;width:400px" id="minus_one" onclick="minus_one()"> - </button></br>
+		<button style="height:400px;width:400px" id="plus_one" onclick="plus_one()">  </button> </br>
+		<button style="height:400px;width:400px" id="minus_one" onclick="minus_one()">  </button></br>
 	</body>
 </html>
