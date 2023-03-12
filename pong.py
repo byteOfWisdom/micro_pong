@@ -2,7 +2,7 @@ from driver import set_xy, push, reset
 from random import random
 from time import sleep_ms
 from webserver import get_pos
-from math import sqrt
+from math import sqrt, sin, cos, pi
 
 WIN = 7
 
@@ -12,8 +12,8 @@ class Game:
         self.x = 7.5
         self.y = 7.5
 
-        self.vx = 0.2 * random()
-        self.vy = 0.1 * random()
+        self.vx = 0.2 * sin(random() * 2 * pi)
+        self.vy = 0.2 * cos(random() * 2 * pi)
 
         self.p1 = 0
         self.p2 = 0
@@ -37,14 +37,14 @@ def tick(game_state):
     game_state.y += game_state.vy
 
     # check collision
-    if int(game_state.x) == 0:
-        if game_state.p1 - int(game_state.y) < 3:
+    if round(game_state.x) == 0:
+        if abs(game_state.p1 - round(game_state.y)) < 3:
             game_state.vx = - game_state.vx
         else:
             game_state.x = 7.5
             game_state.y = 7.5
-            game_state.vx = 0.2 * random()
-            game_state.vy = 0.1 * random()
+            game_state.vx = 0.2 * sin(random() * 2 * pi)
+            game_state.vy = 0.2 * cos(random() * 2 * pi)
             game_state.p2_points += 1
             show_score(game_state)
 
@@ -52,25 +52,25 @@ def tick(game_state):
                 game_state = Game()
 
 
-    elif int(game_state.x) == 15:
-        if game_state.p2 - int(game_state.y) < 3:
+    elif round(game_state.x) == 15:
+        if abs(game_state.p2 - round(game_state.y)) < 3:
             game_state.vx = -game_state.vx
         else:
             game_state.x = 7.5
             game_state.y = 7.5
-            game_state.vx = 0.2 * random()
-            game_state.vy = 0.1 * random()
+            game_state.vx = 0.2 * sin(random() * 2 * pi)
+            game_state.vy = 0.2 * cos(random() * 2 * pi)
             game_state.p1_points += 1
             show_score(game_state)
 
             if game_state.p1_points == WIN:
                 game_state = Game()
 
-    if int(game_state.y) == 0 or int(game_state.y) == 15:
+    if round(game_state.y) == 0 or round(game_state.y) == 15:
         game_state.vy = - game_state.vy
 
 
-    sleep_ms(int(1000 / game_state.game_speed))
+    sleep_ms(round(1000 / game_state.game_speed))
     return game_state
 
 
@@ -79,9 +79,9 @@ def render(game_state):
 
     #ball
     #todo interpolate ball
-    set_xy(int(game_state.x), int(game_state.y), 0, 64, 0)
-    set_xy(int(game_state.x - game_state.vx * 5), int(game_state.y - game_state.vy * 5), 0, 16, 0)
-    set_xy(int(game_state.x - game_state.vx * 10), int(game_state.y - game_state.vy * 10), 0, 16, 0)
+    set_xy(round(game_state.x), round(game_state.y), 0, 64, 0)
+    set_xy(round(game_state.x - game_state.vx * 5), round(game_state.y - game_state.vy * 5), 0, 16, 0)
+    set_xy(round(game_state.x - game_state.vx * 10), round(game_state.y - game_state.vy * 10), 0, 8, 0)
 
 
     # paddles
