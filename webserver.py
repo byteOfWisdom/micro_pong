@@ -5,9 +5,15 @@ import time
 p1_pos = 0
 p2_pos = 0
 
+p1_conn = False
+p2_conn = False
+
 
 def get_pos():
     return p1_pos, p2_pos
+
+def ready():
+    return p1_conn and p2_conn
 
 
 def launch_server():
@@ -22,6 +28,8 @@ def launch_server():
 def run_server():
     global p1_pos
     global p2_pos
+    global p1_conn
+    global p2_conn
 
     server = launch_server()
 
@@ -57,7 +65,7 @@ def run_server():
                     continue
 
 
-            raw_request = client.recv(2048).decode()
+            raw_request = client.recv(1042).decode()
             request = str(raw_request)
 
             #print(raw_request)
@@ -89,9 +97,11 @@ def run_server():
 
                 if "/p1" in request:
                     client.sendall(p_one.encode())
+                    p1_conn = True
 
                 elif "/p2" in request:
                     client.sendall(p_two.encode())
+                    p2_conn = True
 
                 elif "/reboot"in request:
                     client.sendall("<html><head>reboot</head> <body>rebooting now\n</body></html>")
