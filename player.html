@@ -5,12 +5,23 @@
       touch-action: manipulation;
   	}
 	</style>
+	<head> <title>Pico W</title> </head>
+
+	<body>
+		<input type="range" min="0" max="15" value="7" id="slider">
+	</body>
+
 	<script> 
 
-	var ip = "SERVER_IP";
+	const ip = "SERVER_IP";
+	const delay = 1000 / 20;
 
-	function plus_one() {
-		fetch(ip + "_plus_one", {
+	const interval = setInterval(send_state, delay);
+
+	function send_state() {
+		const slider = document.getElementById('slider');
+		let value = slider.value;
+		fetch(ip + value, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -19,26 +30,9 @@
 		.catch((error) => {
 			console.error("Error:", error);
 		});
-	}
 
-	function minus_one() {
-		fetch(ip + "_minus_one", {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
 	}
 
 	</script>
 
-	<head> <title>Pico W</title> </head>
-
-	<body>
-		<button style="height:400px;width:400px" id="plus_one" onclick="plus_one()">  </button> </br>
-		<button style="height:400px;width:400px" id="minus_one" onclick="minus_one()">  </button></br>
-	</body>
 </html>

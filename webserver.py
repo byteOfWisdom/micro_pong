@@ -64,27 +64,22 @@ def run_server():
                     client.close()
                     continue
 
-
-            raw_request = client.recv(1042).decode()
+            raw_request = client.recv(512).decode()
             request = str(raw_request)
 
             #print(raw_request)
 
-
             if "PUT" in request:
-                if "p1_plus_one" in request:
-                    p1_pos -= 1
-                if "p1_minus_one" in request:
-                    p1_pos += 1
-                if "p2_plus_one" in request:
-                    p2_pos -= 1
-                if "p2_minus_one" in request:
-                    p2_pos += 1
+                player = request[6]
+                value = request[7:9]
 
-                if p1_pos < 0: p1_pos = 0
-                if p1_pos > 13: p1_pos = 13
-                if p2_pos < 0: p2_pos = 0
-                if p2_pos > 13: p2_pos = 13
+                if player == "1":
+                    p1_pos = int(value)
+                if player == "2":
+                    p2_pos = int(value)
+
+                #print("player", player)
+                #print("value", value)
 
                 response = 'HTTP/1.0 204 No Content\r\n\r\n'
                 client.sendall(response.encode())

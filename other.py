@@ -1,7 +1,7 @@
 from time import sleep
-import webserver
+import receiver
 
 def runner():
 	while True:
-		sleep(1)
-		print(webserver.get_pos())
+		sleep(0.1)
+		#print(receiver.get_pos())

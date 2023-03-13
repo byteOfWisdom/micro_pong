@@ -1,7 +1,7 @@
 from driver import set_xy, push, reset
 from random import random
 from time import sleep_ms
-from webserver import get_pos, ready
+from receiver import get_pos, ready
 from math import sqrt, sin, cos, pi
 
 WIN = 7
